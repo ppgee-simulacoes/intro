@@ -8,8 +8,8 @@ Created on Sun Mar 19 14:46:39 2017
 """
 
 seed = 10
-numSamples = 100
+num_samples = 100
 
-print("\n\n\nInitiating...")
+print("\n\n\nInitializing...")
 print("\nSeed = ", seed)
-print("\nNumber of samples = ", numSamples)
+print("\nNumber of samples = ", num_samples)
