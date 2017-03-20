@@ -9,6 +9,7 @@ Created on Sun Mar 19 14:46:39 2017
 
 from random_generator import RandomGenerator
 from plotter import Plotter
+from distribution import Distribution
 
 seed = 10
 num_samples = [100, 1000, 10000]
@@ -26,6 +27,7 @@ for sd in range(0,len(num_samples)):
     pltr = Plotter(num_samples[sd],num_bins,figs_dir)
     
     uni_samples = rnd_gen.uniform()
-    pltr.plot_uniform(uni_samples)
+    pltr.plot_dist(uni_samples,Distribution.UNIFORM)
     
     norm_samples = rnd_gen.normal()
+    pltr.plot_dist(norm_samples,Distribution.NORMAL)
