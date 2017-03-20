@@ -59,7 +59,7 @@ class Plotter(object):
         ax2.set_ylabel("Cumulative probability \n density")
         
         #Save and show
-        file_name = self.get_dir_name() + "uniform_pdf_" \
+        file_name = self.get_dir_name() + "uniform_" \
                      + str(self.get_num_samples()) + ".png"
         plt.savefig(file_name)
         plt.show()

@@ -41,6 +41,24 @@ class RandomGeneratorTest(unittest.TestCase):
         rnd_arr_2 = self.random_generator_2.uniform()
         self.assertTrue(np.array_equal(rnd_arr_1,rnd_arr_2),
                         "Arrays created with same seed differ")
+        
+    def test_normal(self):
+        rnd_arr_1 = self.random_generator_1.normal()
+        
+        self.assertEqual(1000,len(rnd_arr_1))
+        
+        #Test standard deviation
+        epsilon = 0.05
+        self.assertTrue(abs(np.std(rnd_arr_1) - 1) < epsilon)
+        
+        #Test mean value
+        epsilon = 0.05
+        self.assertTrue(abs(np.mean(rnd_arr_1) - 0) < epsilon)
+        
+        #Same seed should yield same arrays
+        rnd_arr_2 = self.random_generator_2.normal()
+        self.assertTrue(np.array_equal(rnd_arr_1,rnd_arr_2),
+                        "Arrays created with same seed differ")
        
 if __name__ == '__main__':
     unittest.main()

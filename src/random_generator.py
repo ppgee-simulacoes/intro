@@ -6,7 +6,7 @@ Created on Sun Mar 19 16:33:54 2017
 """
 
 import numpy as np
-#import math
+import math
 
 class RandomGenerator(object):
     
@@ -21,11 +21,27 @@ class RandomGenerator(object):
     def get_num_samples(self):
         return self.__num_samples
     
+    def get_rnd_state(self):
+        return self.__rnd_state
+    
     def uniform(self):
-        return self.__rnd_state.rand(self.get_num_samples(),1)
+        return self.get_rnd_state().rand(self.get_num_samples(),1)
     
     def normal(self):
-        pass
+        """
+        Uses the Box-Muller transform to generate normal distributed
+        random numbers.
+        
+        Returns
+        -------
+            z1: Normal (Gausian) distributed numpy array
+        """
+        
+        u1 = self.get_rnd_state().rand(self.get_num_samples(),1)
+        u2 = self.get_rnd_state().rand(self.get_num_samples(),1)
+        
+        z1 = np.sqrt(-2*np.log(u1))*np.cos(2*math.pi*u2)
+        return z1
     
     def triangle(self):
         pass
