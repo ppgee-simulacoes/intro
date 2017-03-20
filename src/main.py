@@ -31,3 +31,6 @@ for sd in range(0,len(num_samples)):
     
     norm_samples = rnd_gen.normal()
     pltr.plot_dist(norm_samples,Distribution.NORMAL)
+    
+    tri_samples = rnd_gen.triangle()
+    pltr.plot_dist(tri_samples,Distribution.TRIANGLE)
