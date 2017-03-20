@@ -10,13 +10,17 @@ import matplotlib.pyplot as plt
 
 class Plotter(object):
     
-    def __init__(self, num_samples):
+    def __init__(self, num_samples,dir_name):
         self.__num_samples = num_samples
+        self.__dir_name = dir_name
         
     def get_num_samples(self):
         return self.__num_samples
     
-    def plot_uniform(self, arr):
+    def get_dir_name(self):
+        return self.__dir_name
+    
+    def plot_uniform_pdf(self, arr):
         num_bins = 50
         fig, ax = plt.subplots()
                 
@@ -31,10 +35,25 @@ class Plotter(object):
         #General plot configurations
         ax.set_xlabel("Value")
         ax.set_ylabel("Probability density")
-        plt.axis([0,1,0,1.2])
-        plt.savefig("../figs/uniform.png")
+#        plt.axis([0,1,0,1.5])
+        
+        file_name = (self.get_dir_name() + "uniform_pdf_" 
+                     + str(self.get_num_samples()) + ".png")
+        plt.savefig(file_name)
         plt.show()
         
-    def plot_histogram(self, arr):
+    def plot_uniform_cdf(self, arr):
+        pass
+    
+    def plot_normal_pdf(self, arr):
+        pass
+    
+    def plot_normal_cdf(self,arr):
+        pass
+    
+    def plot_triangle_pdf(self,arr):
+        pass
+    
+    def plot_triangle_cdf(self,arr):
         pass
         

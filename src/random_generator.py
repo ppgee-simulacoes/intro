@@ -22,4 +22,10 @@ class RandomGenerator(object):
         return self.__num_samples
     
     def uniform(self):
-        return self.__rnd_state.rand(1,self.get_num_samples())
+        return self.__rnd_state.rand(self.get_num_samples(),1)
+    
+    def normal(self):
+        pass
+    
+    def triangle(self):
+        pass

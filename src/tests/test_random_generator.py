@@ -28,7 +28,7 @@ class RandomGeneratorTest(unittest.TestCase):
     def test_uniform(self):
         rnd_arr_1 = self.random_generator_1.uniform()
         
-        self.assertEqual(1000,np.size(rnd_arr_1,1))
+        self.assertEqual(1000,len(rnd_arr_1))
         
         self.assertTrue(np.amin(rnd_arr_1) >= 0)
         self.assertTrue(np.amax(rnd_arr_1) <= 1)
