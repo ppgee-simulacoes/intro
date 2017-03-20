@@ -8,12 +8,12 @@ Created on Sun Mar 19 16:33:54 2017
 import numpy as np
 #import math
 
-class GenerateRandom(object):
+class RandomGenerator(object):
     
     def __init__(self, seed, num_samples):
         self.__seed = seed
         self.__num_samples = num_samples
-        np.random.seed(seed)
+        self.__rnd_state = np.random.RandomState(seed)
         
     def get_seed(self):
         return self.__seed
@@ -22,5 +22,4 @@ class GenerateRandom(object):
         return self.__num_samples
     
     def uniform(self):
-        return np.random.rand(1,self.get_num_samples)
-        
+        return self.__rnd_state.rand(1,self.get_num_samples())
