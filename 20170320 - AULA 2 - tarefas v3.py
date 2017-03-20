@@ -6,7 +6,6 @@
 #- Plotar CDF obtida e comparar com CDF esperada
 #- Usar sementes fixas diferentes e plotar gráfucis 
 
-
 from numpy import random, sqrt, log, sin, cos, pi
 from pylab import show, hist, subplot, figure
 import numpy as np
@@ -16,29 +15,27 @@ import scipy.stats
 import pylab
 
 # BOX MULLER - TRANSFORMATION FUNCTION
-print("Transformation Box Muller - OK")
 def gaussian(u1,u2):
   z1 = sqrt(-2*log(u1))*cos(2*pi*u2)
   z2 = sqrt(-2*log(u1))*sin(2*pi*u2)
   return z1,z2
 
-# uniformly distributed values between 0 and 1, com 100 amostras
+# uniformly distributed values between 0 and 1 (N=100 samples)
 u1 = random.rand(100)
 u2 = random.rand(100)
 print ("variáveis aleatórias com distribuição uniforme, e N=100 amostras")
 print ("u1:" , u1)
 print ("u2:" , u2)
 
-# run the transformation (100 amostras)
+# run the transformation (N=100 samples)
 z1,z2 = gaussian(u1,u2)
 print ("Gaussiana - OK")
 print ("variáveis aleatórias com distribuição normal, e N=100 amostras")
 print ("z1:" , z1)
 print ("z2:" , z2)
+print("Transformation Box Muller - OK")
 
 # plotting the values before and after the transformation
-
-
 print ("HISTOGRAMAS - antes e depois da Transf. Box Muller") 
 print ("1a linha => u1 e u2 -> Var. aleatorias dist. Linear")
 print ("2a linha => z1 e z1 -> Var. aleatorias dist. Normal")
@@ -53,7 +50,7 @@ subplot(224)
 hist(z2)
 show()
 
-# calculate and plot CDF from Z1 and Z2, com N=100
+# calculate and plot CDF from Z1 and Z2 (N=100 samples)
 print ("Calculo e plot da CDF de z1 e z2")
 num_bins_plot_cdf_z1 = 20
 counts, bin_edges_z1 = np.histogram(z1, bins=num_bins_plot_cdf_z1, normed=True)
@@ -65,9 +62,8 @@ counts, bin_edges_z2 = np.histogram(z2, bins=num_bins_plot_cdf_z2, normed=True)
 cdf_z2 = np.cumsum(counts)
 pylab.plot(bin_edges_z2[1:], cdf_z2)
 
-
 ######################################################################
-# uniformly distributed values between 0 and 1, 100 amostras.
+# uniformly distributed values between 0 and 1 (N=100 samples)
 u1 = random.rand(1000)
 u2 = random.rand(1000)
 
