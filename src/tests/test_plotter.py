@@ -6,8 +6,7 @@ Created on Mon Mar 20 09:49:02 2017
 """
 
 import unittest
-#import numpy as np
-#import matplotlib.pyplot as plt
+import numpy as np
 
 from . import Plotter
 
@@ -22,7 +21,9 @@ class PlotterTest(unittest.TestCase):
         self.assertEqual(1000,self.plotter.get_num_samples())
         
     def test_plot_uniform(self):
-        self.plotter.plot_uniform()
+        arr = np.arange(0,self.plotter.get_num_samples(),1)
+        arr = arr/self.plotter.get_num_samples()
+        self.plotter.plot_uniform(arr)
 
 if __name__ == '__main__':
     unittest.main()

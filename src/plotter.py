@@ -16,13 +16,25 @@ class Plotter(object):
     def get_num_samples(self):
         return self.__num_samples
     
-    def plot_uniform(self):
-        x = np.arange(0,1.1,0.1)
-        y = 0.5*np.ones(np.size(x))
-        plt.plot(x,y)
-        plt.axis([0, 1, 0, 1])
-        plt.savefig("../figs/uniform_pdf.png")
+    def plot_uniform(self, arr):
+        num_bins = 50
+        fig, ax = plt.subplots()
+                
+        #Plot histogram
+        n, bins, patches = plt.hist(arr,num_bins, normed = 1)
         
-    def plot_histogram(self):
+        #Plot uniform PDF mean valeue
+        x = np.arange(0,self.get_num_samples(),1)/self.get_num_samples()
+        y = np.ones(np.size(x))
+        ax.plot(x,y,'r',linewidth = 0.5)
+        
+        #General plot configurations
+        ax.set_xlabel("Value")
+        ax.set_ylabel("Probability density")
+        plt.axis([0,1,0,1.2])
+        plt.savefig("../figs/uniform.png")
+        plt.show()
+        
+    def plot_histogram(self, arr):
         pass
         
