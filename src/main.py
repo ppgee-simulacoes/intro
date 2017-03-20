@@ -27,3 +27,5 @@ for sd in range(0,len(num_samples)):
     
     uni_samples = rnd_gen.uniform()
     pltr.plot_uniform(uni_samples)
+    
+    norm_samples = rnd_gen.normal()

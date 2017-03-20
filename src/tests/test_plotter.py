@@ -9,6 +9,7 @@ import unittest
 import numpy as np
 
 from . import Plotter
+from . import Distribution
 
 class PlotterTest(unittest.TestCase):
     
@@ -28,11 +29,16 @@ class PlotterTest(unittest.TestCase):
     def test_dir_name(self):
         self.assertTrue("../figs/",self.plotter.get_dir_name())
         
-    def test_plot_uniform_pdf(self):
+    def test_plot_uniform(self):
         arr = np.arange(0,self.plotter.get_num_samples(),1)
         arr = arr/self.plotter.get_num_samples()
         
-        self.plotter.plot_uniform(arr)
+        self.plotter.plot_dist(arr,Distribution.UNIFORM)
+        
+    def test_plot_normal(self):
+        arr = np.linspace(-3,3,self.plotter.get_num_samples())
+        
+        self.plotter.plot_dist(arr,Distribution.NORMAL)
 
 if __name__ == '__main__':
     unittest.main()

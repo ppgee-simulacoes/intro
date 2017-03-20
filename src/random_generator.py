@@ -37,8 +37,8 @@ class RandomGenerator(object):
             z1: Normal (Gausian) distributed numpy array
         """
         
-        u1 = self.get_rnd_state().rand(self.get_num_samples(),1)
-        u2 = self.get_rnd_state().rand(self.get_num_samples(),1)
+        u1 = self.uniform()
+        u2 = self.uniform()
         
         z1 = np.sqrt(-2*np.log(u1))*np.cos(2*math.pi*u2)
         return z1
