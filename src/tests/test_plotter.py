@@ -39,6 +39,11 @@ class PlotterTest(unittest.TestCase):
         arr = np.linspace(-3,3,self.plotter.get_num_samples())
         
         self.plotter.plot_dist(arr,Distribution.NORMAL)
+        
+    def test_plot_triangle(self):
+        arr = np.linspace(0,10,self.plotter.get_num_samples())
+        
+        self.plotter.plot_dist(arr,Distribution.TRIANGLE)
 
 if __name__ == '__main__':
     unittest.main()

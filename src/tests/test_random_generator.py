@@ -59,6 +59,20 @@ class RandomGeneratorTest(unittest.TestCase):
         rnd_arr_2 = self.random_generator_2.normal()
         self.assertTrue(np.array_equal(rnd_arr_1,rnd_arr_2),
                         "Arrays created with same seed differ")
+        
+    def test_tringle(self):
+        rnd_arr_1 = self.random_generator_1.triangle()
+        
+        self.assertEqual(1000,len(rnd_arr_1))
+        
+        #Test mean value
+        epsilon = 0.1
+        self.assertTrue(abs(np.mean(rnd_arr_1) - 6.6666666) < epsilon)
+        
+        #Same seed should yield same arrays
+        rnd_arr_2 = self.random_generator_2.triangle()
+        self.assertTrue(np.array_equal(rnd_arr_1,rnd_arr_2),
+                        "Arrays created with same seed differ")
        
 if __name__ == '__main__':
     unittest.main()

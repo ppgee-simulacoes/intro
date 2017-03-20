@@ -54,7 +54,12 @@ class Plotter(object):
             title = "Normal distribution with "
             file_name = self.get_dir_name() + "normal_" 
         elif dist == Distribution.TRIANGLE:
-            pass
+            y_pdf = 0.02*bins
+            
+            y_cdf = 0.01*bins**2
+            
+            title = "Triangular distribution with "
+            file_name = self.get_dir_name() + "triangular_" 
         else:
             pass
         

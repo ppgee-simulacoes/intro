@@ -44,4 +44,17 @@ class RandomGenerator(object):
         return z1
     
     def triangle(self):
-        pass
+        """
+        Uses the inverse CDF to generate triangular random distribution
+        with PDF:
+            
+           f(x) = 0.02*x, 0 < x < 10
+                  0     , otherwise
+        
+        Returns
+        -------
+            t1: Triangle distributed numpy array
+        """
+        u1 = self.uniform()
+        t1 = np.sqrt(u1/0.01)
+        return t1
