@@ -1,10 +1,10 @@
 #TAREFAS AULA 2 
 # Implementar gerador de números aleatórios, com distribuição normal
 # - Usar transformada de Box Muller
-#- Gerar sequência de N=100, 1000 e 10.000 amostras
-#- Plotar Histograma e comparar com PDF esperada
-#- Plotar CDF obtida e comparar com CDF esperada
-#- Usar sementes fixas diferentes e plotar gráfucis 
+# - Gerar sequência de N=100, 1000 e 10.000 amostras
+# - Plotar Histograma e comparar com PDF esperada
+# - Plotar CDF obtida e comparar com CDF esperada
+# - Usar sementes fixas diferentes e plotar gráficos 
 
 from numpy import random, sqrt, log, sin, cos, pi
 from pylab import show, hist, subplot, figure
@@ -108,5 +108,3 @@ hist(z1)     # the histograms of z1 and z2
 subplot(224)
 hist(z2)
 show()
-
-#==========================================================================
