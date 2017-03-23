@@ -26,7 +26,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 = GENERATE PSEUDO-RANDOM NUMBERS FOR BOX-MULLER TRANSFORMATION =
 ================================================================
 """
-
+from scipy.stats import norm
 import numpy as np
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
@@ -54,7 +54,7 @@ z1, z2 = box_muller(u1,u2) # Result of Box-Muller Transformation
 
 fig, ax = plt.subplots() # Create fig
 
-# the histogram of the data
+# Histogram of the data
 n, bins, patches = ax.hist((z1,z2), num_bins, normed='1', label=('$Z_{1}$', '$Z_{2}$'))
 
 # add a 'best fit' line - PDF
@@ -73,5 +73,56 @@ filename = os.path.join(dir, "PDF_histogram.png") # Relative path
 plt.savefig(filename) # Save graphic
  
 plt.show() # Show graphic
+plt.close(fig) # Close fig
 
+# Cumulative Distribution Function (CDF) of Z1
+fig, ax = plt.subplots() # Create fig
+sorted_vals = np.sort(np.unique(z1)) 
+cdf = np.zeros(len(sorted_vals))
+n = float(len(z1))
+for i, val in enumerate(sorted_vals):
+    cdf[i] = np.sum(z1 <= val)/n
+ax.plot(sorted_vals, cdf, "-", label='$Z_{1}$')
+ax.plot(sorted_vals, norm.cdf(sorted_vals), "-", label='Ideal')
+
+
+ax.set_xlabel('Value of sample') # xlabel
+ax.set_ylabel('Probability') # ylabel
+ax.set_title(r"CDF of Box-Muller Transformation" "\n" r"$\mu=0$, $\sigma=1$, Number of samples = %d" % (size)) # Tittle
+ax.legend(loc='upper left') # Show legend at upper left location
+
+fig.tight_layout() # Tweak spacing to prevent clipping of ylabel
+
+dir = 'box-muller_output' # directory to save graphs
+if not os.path.isdir(dir): os.makedirs(dir) # if "dir" not exists, create him
+filename = os.path.join(dir, "CDF_Z1.png") # Relative path
+plt.savefig(filename) # Save graphic
+ 
+plt.show() # Show graphic
+plt.close(fig) # Close fig
+
+# Cumulative Distribution Function (CDF) of Z2
+fig, ax = plt.subplots() # Create fig
+sorted_vals = np.sort(np.unique(z2)) 
+cdf = np.zeros(len(sorted_vals))
+n = float(len(z2))
+for i, val in enumerate(sorted_vals):
+    cdf[i] = np.sum(z2 <= val)/n
+ax.plot(sorted_vals, cdf, "-", label='$Z_{2}$')
+ax.plot(sorted_vals, norm.cdf(sorted_vals), "-", label='Ideal')
+
+
+ax.set_xlabel('Value of sample') # xlabel
+ax.set_ylabel('Probability') # ylabel
+ax.set_title(r"CDF of Box-Muller Transformation" "\n" r"$\mu=0$, $\sigma=1$, Number of samples = %d" % (size)) # Tittle
+ax.legend(loc='upper left') # Show legend at upper left location
+
+fig.tight_layout() # Tweak spacing to prevent clipping of ylabel
+
+dir = 'box-muller_output' # directory to save graphs
+if not os.path.isdir(dir): os.makedirs(dir) # if "dir" not exists, create him
+filename = os.path.join(dir, "CDF_Z2.png") # Relative path
+plt.savefig(filename) # Save graphic
+ 
+plt.show() # Show graphic
 plt.close(fig) # Close fig
