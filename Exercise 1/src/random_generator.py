@@ -48,8 +48,9 @@ class RandomGenerator(object):
         Uses the inverse CDF to generate triangular random distribution
         with PDF:
             
-           f(x) = 0.02*x, 0 < x < 10
-                  0     , otherwise
+           f(x) = 
+               0.02*x, 0 < x < 10
+               0     , otherwise
         
         Returns
         -------
