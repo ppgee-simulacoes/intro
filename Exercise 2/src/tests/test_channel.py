@@ -11,7 +11,7 @@ import unittest
 import numpy as np
 
 from . import Channel
-from .support import ChannelModel
+from src.support.enumerations import ChannelModel
 
 class ChannelTest(unittest.TestCase):
     def setUp(self):
@@ -20,6 +20,7 @@ class ChannelTest(unittest.TestCase):
         self.channel1 = Channel(ChannelModel.IDEAL,seed)
         self.channel2 = Channel(ChannelModel.CONSTANT,seed)
         self.channel3 = Channel(ChannelModel.MARKOV,seed)
+        self.channel4 = Channel(3,seed)
         
     def test_get_model(self):
         self.assertEqual(ChannelModel.IDEAL,\
@@ -41,7 +42,19 @@ class ChannelTest(unittest.TestCase):
         
         # Ideal channel should cause no bit errors
         pck_Rx = self.channel1.fade(pck_Tx)
-        self.assertEqual(0,np.sum(pck_Rx))        
+        self.assertEqual(0,np.sum(pck_Rx))
+        
+        # For now, constant channel sould return exception
+        with self.assertRaises(NotImplementedError):
+            pck_Rx = self.channel2.fade(pck_Tx)
+            
+        # For now, Markov channel sould return exception
+        with self.assertRaises(NotImplementedError):
+            pck_Rx = self.channel3.fade(pck_Tx)
+        
+        # Invalid Channel Model should raise exception
+        with self.assertRaises(NameError):
+            pck_Rx = self.channel4.fade(pck_Tx)
         
 if __name__ == '__main__':
     unittest.main()

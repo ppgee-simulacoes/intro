@@ -12,9 +12,10 @@ Created on Mon Mar 27 09:16:52 2017
 
 import numpy as np
 
-from support import ChannelModel
+from src.support.enumerations import ChannelModel
 
 class Channel(object):
+    
     def __init__(self,model,seed):
         self.__model = model
         self.__seed = seed
@@ -34,14 +35,14 @@ class Channel(object):
         elif self.get_model() == ChannelModel.MARKOV:
             return self.fade_markov(pck)
         else:
-            return NotImplementedError
+            raise NameError('Unknown channel model!')
         
     def fade_ideal(self,pck_Tx):
         pck_Rx = np.array(pck_Tx,copy = True)
         return pck_Rx
     
     def fade_constant(self,pck_Tx):
-        return NotImplementedError
+        raise NotImplementedError
     
     def fade_markov(self,pck_Tx):
-        return NotImplementedError
+        raise NotImplementedError
