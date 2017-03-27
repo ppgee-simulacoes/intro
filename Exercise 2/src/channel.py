@@ -4,6 +4,7 @@ Channel class, which implements three different channel models.
 
 TODO Implement constant channel
 TODO Implement Markov channel
+TODO Create set_seed() method
 
 Created on Mon Mar 27 09:16:52 2017
 
@@ -48,15 +49,15 @@ class Channel(object):
             pck_Rx -- received packet
         """
         if self.get_model() == ChannelModel.IDEAL:
-            return self.fade_ideal(pck_Tx)
+            return self.__fade_ideal(pck_Tx)
         elif self.get_model() == ChannelModel.CONSTANT:
-            return self.fade_constant(pck_Tx)
+            return self.__fade_constant(pck_Tx)
         elif self.get_model() == ChannelModel.MARKOV:
-            return self.fade_markov(pck_Tx)
+            return self.__fade_markov(pck_Tx)
         else:
             raise NameError('Unknown channel model!')
         
-    def fade_ideal(self,pck_Tx):
+    def __fade_ideal(self,pck_Tx):
         """
         Ideal channel, just returns a copy of transmitted packet
         
@@ -69,7 +70,7 @@ class Channel(object):
         pck_Rx = np.array(pck_Tx,copy = True)
         return pck_Rx
     
-    def fade_constant(self,pck_Tx):
+    def __fade_constant(self,pck_Tx):
         """
         Constant channel, with a constant BER.
         
@@ -81,7 +82,7 @@ class Channel(object):
         """
         raise NotImplementedError
     
-    def fade_markov(self,pck_Tx):
+    def __fade_markov(self,pck_Tx):
         """
         Markov chain modeled channel, BER changes for each packet.
         

@@ -2,6 +2,8 @@
 """
 Source class: crates packets and checks for bit and packet errors.
 
+TODO Create set_seed() method
+
 Created on Sun Mar 26 10:00:08 2017
 
 @author: Calil
