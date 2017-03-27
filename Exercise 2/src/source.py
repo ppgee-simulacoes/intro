@@ -11,8 +11,15 @@ import numpy as np
 
 class Source(object):
     def __init__(self,n_bits,seed):
-        self.__n_bits = n_bits                 # number of bits per packet 
-        self.__seed = seed                     # random number generator seed
+        """
+        Class constructor.
+        
+        Keyword arguments:
+            n_bits -- number of bits per packet
+            seed -- seed for random number generator
+        """
+        self.__n_bits = n_bits
+        self.__seed = seed
         self.__last_pck = np.zeros([1,n_bits]) # last transmitted packet
         self.__rnd_state = np.random.RandomState(seed)
     

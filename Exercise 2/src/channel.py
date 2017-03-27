@@ -17,32 +17,78 @@ from src.support.enumerations import ChannelModel
 class Channel(object):
     
     def __init__(self,model,seed):
+        """
+        Class constructor.
+        
+        Keyword arguments:
+            model -- channel model (IDEAL, CONSTANT or MARKOV)
+            seed -- seed for random number generator
+        """
         self.__model = model
         self.__seed = seed
         self.__rnd_state = np.random.RandomState(seed)
         
     def get_model(self):
+        """Returns channel model."""
         return self.__model
     
     def get_seed(self):
+        """Returns random number generator seed."""
         return self.__seed
     
-    def fade(self,pck):
+    def fade(self,pck_Tx):
+        """
+        Applies fade to packet according to channel model, 
+        introducing bit errors.
+        
+        Keyword arguments:
+            pck_Tx -- transmitted packet
+            
+        Returns:
+            pck_Rx -- received packet
+        """
         if self.get_model() == ChannelModel.IDEAL:
-            return self.fade_ideal(pck)
+            return self.fade_ideal(pck_Tx)
         elif self.get_model() == ChannelModel.CONSTANT:
-            return self.fade_constant(pck)
+            return self.fade_constant(pck_Tx)
         elif self.get_model() == ChannelModel.MARKOV:
-            return self.fade_markov(pck)
+            return self.fade_markov(pck_Tx)
         else:
             raise NameError('Unknown channel model!')
         
     def fade_ideal(self,pck_Tx):
+        """
+        Ideal channel, just returns a copy of transmitted packet
+        
+        Keyword arguments:
+            pck_Tx -- transmitted packet
+            
+        Returns:
+            pck_Rx -- received packet, a copy of pck_Tx
+        """
         pck_Rx = np.array(pck_Tx,copy = True)
         return pck_Rx
     
     def fade_constant(self,pck_Tx):
+        """
+        Constant channel, with a constant BER.
+        
+        Keyword arguments:
+            pck_Tx -- transmitted packet
+            
+        Returns:
+            pck_Rx -- received packet
+        """
         raise NotImplementedError
     
     def fade_markov(self,pck_Tx):
+        """
+        Markov chain modeled channel, BER changes for each packet.
+        
+        Keyword arguments:
+            pck_Tx -- transmitted packet
+            
+        Returns:
+            pck_Rx -- received packet
+        """
         raise NotImplementedError
