@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Enumerations used.
+Enumerations used in the project.
 
 Created on Sun Mar 26 12:06:35 2017
 
