@@ -11,7 +11,7 @@ Created on Mon Mar 27 14:54:10 2017
 
 import unittest
 
-from . import Statistics
+from src.statistics import Statistics
 
 class StatisticsTest(unittest.TestCase):
     
@@ -55,9 +55,9 @@ class StatisticsTest(unittest.TestCase):
     def test_calc_results(self):
         per, thrpt = self.stat.calculate_results()
         self.assertEqual(0.25,per)
-        self.assertEqual(12.5,thrpt)
+        self.assertEqual(37.5,thrpt)
         self.assertEqual([0.25],self.stat.get_per_list())
-        self.assertEqual([12.5],self.stat.get_thrpt_list())
+        self.assertEqual([37.5],self.stat.get_thrpt_list())
         
     def test_reset(self):
         self.stat.reset()
@@ -68,3 +68,18 @@ class StatisticsTest(unittest.TestCase):
         data = [1.0e-04, 5.0e-05, 1.0e-05, 2.0e-05]
         interv = self.stat.conf_interval(data)
         self.assertAlmostEqual(6.42995e-05,interv,delta=0.05e-05)
+        
+    def test_wrap_up(self):
+        self.stat.pck_received(False)
+        self.stat.pck_received(False)
+        self.stat.pck_received(True)
+        self.stat.pck_received(True)
+        
+        self.stat.reset()
+        per, per_conf, thrpt, thrpt_conf = self.stat.wrap_up()
+        
+        self.assertAlmostEqual(0.375,per,delta = 0.01)
+        self.assertAlmostEqual(1.1234,per_conf,delta = 0.01)
+        self.assertAlmostEqual(31.25,thrpt,delta = 0.01)
+        self.assertAlmostEqual(56.1708,thrpt_conf,delta = 0.01)
+        
