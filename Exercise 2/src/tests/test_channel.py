@@ -10,7 +10,7 @@ Created on Sun Mar 26 12:12:32 2017
 import unittest
 import numpy as np
 
-from . import Channel
+from src.channel import Channel
 from src.support.enumerations import ChannelModel
 
 class ChannelTest(unittest.TestCase):
