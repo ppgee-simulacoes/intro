@@ -14,9 +14,9 @@ class Statistics(object):
     
     def __init__(self,n_bits,tx_rate,conf = 0.95):
         
-        self.__conf = conf
-        self.__n_bits = n_bits
-        self.__tx_rate = tx_rate
+        self.__conf = conf          # Confidence 
+        self.__n_bits = n_bits      # Number of bits per packet
+        self.__tx_rate = tx_rate    # Transmission rate
         
         self.__n_pcks = 0
         self.__n_pck_errors = 0
@@ -46,10 +46,20 @@ class Statistics(object):
         return self.__thrpt_list
     
     def __reset(self):
+        """
+        Resets number of transmitted packets and packet errors at the end of
+        iteration.
+        """
         self.__n_pcks = 0
         self.__n_pck_errors = 0
     
     def pck_received(self,pck_error):
+        """
+        Increments number of transmitted packets and packet errors.
+        
+        Inputs:
+            pck_error -- boolan indicating if there was a packet error
+        """
         self.__n_pcks = self.__n_pcks + 1
         if pck_error:
             self.__n_pck_errors = self.__n_pck_errors + 1
@@ -98,6 +108,16 @@ class Statistics(object):
         return mean_val, conf_int
     
     def wrap_up(self):
+        """
+        Finishes a group of iterations, and calculates mean PER and Throughput.
+        
+        Returns:
+            per -- mean packet error rate
+            per_conf -- confidence increment for per
+            thrpt -- mean throughput
+            thrpt_conf -- confidence increment for thrpt
+        """
+        
         per, per_conf = self.conf_interval(self.get_per_list())
         thrpt, thrpt_conf = self.conf_interval(self.get_thrpt_list())
         

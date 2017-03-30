@@ -8,7 +8,6 @@ Created on Mon Mar 27 14:54:10 2017
 """
 
 import unittest
-import numpy as np
 
 from src.statistics import Statistics
 
