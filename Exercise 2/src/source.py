@@ -2,8 +2,6 @@
 """
 Source class: crates packets and checks for bit and packet errors.
 
-TODO Create set_seed() method
-
 Created on Sun Mar 26 10:00:08 2017
 
 @author: Calil
@@ -32,6 +30,10 @@ class Source(object):
     def get_seed(self):
         """Returnt the random number generator seed."""
         return self.__seed
+    
+    def set_seed(self,seed):
+        """Set new seed."""
+        self.__seed = seed
     
     def get_last_pck(self):
         """Returns a reference to the last transmitted packet."""

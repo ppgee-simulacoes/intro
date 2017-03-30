@@ -4,7 +4,6 @@ Channel class, which implements three different channel models.
 
 TODO Implement constant channel
 TODO Implement Markov channel
-TODO Create set_seed() method
 
 Created on Mon Mar 27 09:16:52 2017
 
@@ -32,6 +31,10 @@ class Channel(object):
     def get_model(self):
         """Returns channel model."""
         return self.__model
+    
+    def set_seed(self,seed):
+        """Set new seed."""
+        self.__seed = seed
     
     def get_seed(self):
         """Returns random number generator seed."""
