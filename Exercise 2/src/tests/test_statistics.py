@@ -36,11 +36,11 @@ class StatisticsTest(unittest.TestCase):
     def test_get_n_pck_errors(self):
         self.assertEqual(0,self.stat.get_n_pck_errors())
         
-    def test_get_per_array(self):
-        self.assertEqual(0,len(self.stat.get_per_array()))
+    def test_get_per_list(self):
+        self.assertEqual(0,len(self.stat.get_per_list()))
         
-    def test_get_thrpt_array(self):
-        self.assertEqual(0,len(self.stat.get_thrpt_array()))
+    def test_get_thrpt_list(self):
+        self.assertEqual(0,len(self.stat.get_thrpt_list()))
         
     def test_pck_received(self):
         self.stat.pck_received(False)
@@ -51,21 +51,29 @@ class StatisticsTest(unittest.TestCase):
         self.assertEqual(4,self.stat.get_n_pcks())
         self.assertEqual(1,self.stat.get_n_pck_errors())
         
-        # Test calc_results() method
-        per, thrpt = self.stat.calc_results()
+        # Test calc_iteration_results() method
+        per, thrpt = self.stat.calc_iteration_results()
         self.assertEqual(0.25,per)
         self.assertEqual(37.5,thrpt)
-        print(self.stat.get_per_array())
-        self.assertEqual(np.array([0.25]),self.stat.get_per_array())
-        self.assertEqual(np.array([37.5]),self.stat.get_thrpt_array())     
+        
+        self.assertEqual([0.25],self.stat.get_per_list())
+        self.assertEqual([37.5],self.stat.get_thrpt_list())     
         
     def test_conf_interval(self):
+        # Data with zero standard deviation
+        data = [5, 5, 5, 5, 5, 5, 5, 5]
+        meanVal, interv = self.stat.conf_interval(data)
+        self.assertEqual(5,meanVal)
+        self.assertEqual(0,interv)
+        
+        # General data
         data = [1.0e-04, 5.0e-05, 1.0e-05, 2.0e-05]
         meanVal, interv = self.stat.conf_interval(data)
         self.assertAlmostEqual(4.5e-05,meanVal, delta = 0.05e-05)
         self.assertAlmostEqual(6.42995e-05,interv,delta=0.05e-05)
         
     def test_wrap_up(self):
+        # Simulating iteration: 4 packets with tha same seed
         self.stat.pck_received(False)
         self.stat.pck_received(False)
         self.stat.pck_received(False)
@@ -74,23 +82,33 @@ class StatisticsTest(unittest.TestCase):
         self.assertEqual(4,self.stat.get_n_pcks())
         self.assertEqual(1,self.stat.get_n_pck_errors())
         
-        self.stat.reset()
+        # calc_iteration_results() should yeld PER and Tput for this seed
+        per, thrpt = self.stat.calc_iteration_results()
+        self.assertEqual(0.25,per)
+        self.assertEqual(37.5,thrpt)
         
+        # calc_iteration_resulst() should also reset the number of packets
         self.assertEqual(0,self.stat.get_n_pcks())
         self.assertEqual(0,self.stat.get_n_pck_errors())
         
+        # calc_iteration_results() should not reset lists, though
+        self.assertEqual([0.25],self.stat.get_per_list())
+        self.assertEqual([37.5],self.stat.get_thrpt_list()) 
+        
+        # Simulating another iteration
         self.stat.pck_received(False)
         self.stat.pck_received(False)
         self.stat.pck_received(True)
         self.stat.pck_received(True)
-        self.stat.reset()
+        
+        # calc_iteration_results() finishes the iteration
+        per, thrpt = self.stat.calc_iteration_results()
         
         per, per_conf, thrpt, thrpt_conf = self.stat.wrap_up()
         
-        self.assertAlmostEqual(0.375,per,delta = 0.01)
-        self.assertAlmostEqual(1.1234,per_conf,delta = 0.01)
-        self.assertAlmostEqual(31.25,thrpt,delta = 0.01)
-        self.assertAlmostEqual(56.1708,thrpt_conf,delta = 0.01)
+        # wrap_up() should reset lists
+        self.assertEqual(0,len(self.stat.get_per_list()))
+        self.assertEqual(0,len(self.stat.get_thrpt_list()))
         
 if __name__ == '__main__':
     unittest.main()
