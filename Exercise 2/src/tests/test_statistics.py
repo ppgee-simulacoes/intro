@@ -2,8 +2,6 @@
 """
 Unit tests for statistics class.
 
-TODO Implement test for wrap up function.
-
 Created on Mon Mar 27 14:54:10 2017
 
 @author: Calil
@@ -21,7 +19,7 @@ class StatisticsTest(unittest.TestCase):
         n_bits = 1000   # Number of bits per packet
         tx_rate = 50    # Tx rate in Mbps
         
-        self.stat = Statistics(conf,n_bits,tx_rate)
+        self.stat = Statistics(n_bits,tx_rate,conf)
         
     def test_get_conf(self):
         self.assertEqual(0.95,self.stat.get_conf())
@@ -57,6 +55,7 @@ class StatisticsTest(unittest.TestCase):
         per, thrpt = self.stat.calc_results()
         self.assertEqual(0.25,per)
         self.assertEqual(37.5,thrpt)
+        print(self.stat.get_per_array())
         self.assertEqual(np.array([0.25]),self.stat.get_per_array())
         self.assertEqual(np.array([37.5]),self.stat.get_thrpt_array())     
         
@@ -71,6 +70,10 @@ class StatisticsTest(unittest.TestCase):
         self.stat.pck_received(False)
         self.stat.pck_received(False)
         self.stat.pck_received(True)
+        
+        self.assertEqual(4,self.stat.get_n_pcks())
+        self.assertEqual(1,self.stat.get_n_pck_errors())
+        
         self.stat.reset()
         
         self.assertEqual(0,self.stat.get_n_pcks())
