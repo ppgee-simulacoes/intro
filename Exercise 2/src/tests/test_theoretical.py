@@ -9,6 +9,8 @@ Created on Sun Apr  2 11:58:11 2017
 
 import unittest
 import numpy as np
+
+from src.support.enumerations import ChannelModel
 from src.parameters.parameters import Parameters
 from src.theoretical import Theoretical
 
@@ -16,11 +18,16 @@ class TheoreticalTest(unittest.TestCase):
     
     def setUp(self):
         param = Parameters(1)
-        self.theo = Theoretical(param)
+        self.param = param
+        self.theo = Theoretical(param.chan_mod,param.tx_rate,param.p)
         
-    def test_get_param(self):
-        par = self.theo.get_param()
-        self.assertEqual(20,len(par.p))
+    def test_get_model(self):
+        mod = self.theo.get_model()
+        self.assertEqual(mod,ChannelModel.IDEAL)
+        
+    def test_get_tx_rate(self):
+        rate = self.theo.get_tx_rate()
+        self.assertEqual(self.param.tx_rate,rate)
         
     def test_get_state_ps(self):
         ps = self.theo.get_state_ps()

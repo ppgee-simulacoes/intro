@@ -11,6 +11,8 @@ from source import Source
 from channel import Channel
 from statistics import Statistics
 from results import Results
+from theoretical import Theoretical
+from support.enumerations import ChannelModel
 from parameters.parameters import Parameters
 
 class SimulationThread(object):
@@ -27,6 +29,7 @@ class SimulationThread(object):
         self.chann = Channel(param.chan_mod,param.seeds[0],param.p[0])
         self.stat = Statistics(param.n_bits,param.tx_rate,param.conf)
         self.res = Results(param,figs_dir)
+        self.theo = Theoretical(param.chan_mod,param.tx_rate,param.p)
         
         self.__seed_count = 0
         self.__ber_count = 0
@@ -44,28 +47,32 @@ class SimulationThread(object):
         Performs simulation loop and generates results.
         """
         
-        # Seed loop
-        while(self.get_seed_count() < len(self.param.seeds)):
-        
-            # Packet loop
-            for pck in range(0,self.param.n_pcks):
-                # Send packet
-                n_errors, pck_error = self.send_pck()
+        # PER loop
+        for p_idx in range(0,len(self.param.p)):
+            # Seed loop
+            while(self.get_seed_count() < len(self.param.seeds)):
+                # Packet loop
+                for pck in range(0,self.param.n_pcks):
+                    # Send packet
+                    n_errors, pck_error = self.send_pck()
             
-                # Save results only if warm-up is over
-                if pck > self.param.n_warm_up_pcks:
-                    self.stat.pck_received(pck_error)
+                    # Save results only if warm-up is over
+                    if pck > self.param.n_warm_up_pcks:
+                        self.stat.pck_received(pck_error)
                 
-            # After all packets have been sent, calculate iteration results
-            self.stat.calc_iteration_results()
+                # After all packets have been sent, calculate iteration results
+                self.stat.calc_iteration_results()
         
-            # Set new seed
-            self.new_seed()
+                # Set new seed
+                self.new_seed()
             
-        # Calculate mean and confidence
-        per_tpl, thrpt_tpl = self.stat.wrap_up()
-        return per_tpl, thrpt_tpl
+            # Calculate mean and confidence
+            per_tpl, thrpt_tpl = self.stat.wrap_up()
+            self.res.store_res(per_tpl,thrpt_tpl)
             
+        # Validate and plot
+        ber_theo, per_theo, thrpt_theo = self.theo.validate()
+        self.res.plot(per_theo, thrpt_theo)
         
     def send_pck(self):
         """

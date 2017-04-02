@@ -9,21 +9,24 @@ Created on Sun Apr  2 11:16:43 2017
 
 import numpy as np
 from support.enumerations import ChannelModel
-from parameters.parameters import Parameters
 
 class Theoretical(object):
     
-    def __init__(self,param):
+    def __init__(self,model,tx_rate,p):
         """
         Constructor method. Initializes atrributes:
-            self.__param -- parameters object
+            self.__model -- parameters object
+            self.__p -- PER numpy array
             self.__state_ps -- state probabilities for Markov channel
         
         Keyword parameters:
-            param -- parameters object
+           model -- channel model
+           p -- PER numpy array
         """
-        self.__param = param
-        if param.chan_mod == ChannelModel.MARKOV:
+        self.__p = p
+        self.__tx_rate = tx_rate
+        self.__model = model
+        if model == ChannelModel.MARKOV:
             self.__state_ps = self.markov_solve()
         else:
             self.__state_ps = np.array([])
@@ -38,20 +41,27 @@ class Theoretical(object):
             per_mean -- theoretical mean value of PER
             thrpt_mean -- theoretical mean value of Throughput
         """
-        if self.get_param().chan_mod == ChannelModel.IDEAL:
-            ber_mean, per_mean, thrpt_mean = self.validate_ideal()
-        elif self.get_param().chan_mod == ChannelModel.CONSTANT:
-            ber_mean, per_mean, thrpt_mean = self.validate_constant()
-        elif self.get_param().chan_mod == ChannelModel.MARKOV:
-            ber_mean, per_mean, thrpt_mean = self.validate_markov()
+        print("Channel Model: ",self.get_model())
+        if self.__model == ChannelModel.IDEAL:
+            return self.validate_ideal()
+        elif self.__model == ChannelModel.CONSTANT:
+            return self.validate_constant()
+        elif self.__model == ChannelModel.MARKOV:
+            return self.validate_markov()
         else:
             raise NameError('Unknown channel model!')
-            
-        return ber_mean, per_mean, thrpt_mean
       
-    def get_param(self): 
+    def get_model(self): 
         """Getter for Parameters object."""
-        return self.__param
+        return self.__model
+    
+    def get_p(self):
+        """Getter for PER numpy array."""
+        return self.__p
+    
+    def get_tx_rate(self):
+        """Getter for tx_rate."""
+        return self.__tx_rate
     
     def get_state_ps(self):
         """Getter for state probabilities."""
@@ -66,10 +76,9 @@ class Theoretical(object):
             per_mean -- theoretical mean value of PER
             thrpt_mean -- theoretical mean value of Throughput
         """
-        ber_mean = np.zeros(np.size(self.get_param().p))
-        per_mean = np.zeros(np.size(self.get_param().p))
-        thrpt_mean = self.get_param().tx_rate*\
-            np.ones(np.size(self.get_param().p))
+        ber_mean = np.zeros(np.size(self.get_p()))
+        per_mean = np.zeros(np.size(self.get_p()))
+        thrpt_mean = self.get_tx_rate() * np.ones(np.size(self.get_p()))
         return ber_mean, per_mean, thrpt_mean
     
     def validate_constant(self):
