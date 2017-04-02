@@ -121,10 +121,13 @@ class Statistics(object):
         per, per_conf = self.conf_interval(self.get_per_list())
         thrpt, thrpt_conf = self.conf_interval(self.get_thrpt_list())
         
+        per_tpl = (per, per_conf)
+        thrpt_tpl = (thrpt, thrpt_conf)
+        
         self.__per_list = []
         self.__thrpt_list = []
         self.__reset()
         
-        return per, per_conf, thrpt, thrpt_conf
+        return per_tpl, thrpt_tpl
         
         

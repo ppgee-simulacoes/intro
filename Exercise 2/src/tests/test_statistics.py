@@ -97,13 +97,18 @@ class StatisticsTest(unittest.TestCase):
         # Simulating another iteration
         self.stat.pck_received(False)
         self.stat.pck_received(False)
-        self.stat.pck_received(True)
+        self.stat.pck_received(False)
         self.stat.pck_received(True)
         
         # calc_iteration_results() finishes the iteration
         per, thrpt = self.stat.calc_iteration_results()
         
-        per, per_conf, thrpt, thrpt_conf = self.stat.wrap_up()
+        per_tpl, thrpt_tpl = self.stat.wrap_up()
+        
+        self.assertEqual(0.25,per_tpl[0])
+        self.assertEqual(0,per_tpl[1])
+        self.assertEqual(37.5,thrpt_tpl[0])
+        self.assertEqual(0,thrpt_tpl[1])
         
         # wrap_up() should reset lists
         self.assertEqual(0,len(self.stat.get_per_list()))
