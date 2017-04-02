@@ -17,10 +17,11 @@ class ChannelTest(unittest.TestCase):
     def setUp(self):
         seed = 10
         self.n_bits = 1000
-        self.channel1 = Channel(ChannelModel.IDEAL,seed)
-        self.channel2 = Channel(ChannelModel.CONSTANT,seed)
-        self.channel3 = Channel(ChannelModel.MARKOV,seed)
-        self.channel4 = Channel(3,seed)
+        p = 1e-5
+        self.channel1 = Channel(ChannelModel.IDEAL,seed,p)
+        self.channel2 = Channel(ChannelModel.CONSTANT,seed,p)
+        self.channel3 = Channel(ChannelModel.MARKOV,seed,p)
+        self.channel4 = Channel(3,seed,p)
         
     def test_get_model(self):
         self.assertEqual(ChannelModel.IDEAL,\
@@ -32,6 +33,13 @@ class ChannelTest(unittest.TestCase):
         
     def test_get_seed(self):
         self.assertEqual(10,self.channel1.get_seed())
+        
+    def test_get_p(self):
+        self.assertEqual(1e-5,self.channel1.get_p())
+        
+    def test_set_p(self):
+        self.channel1.set_p(2e-5)
+        self.assertEqual(2e-5,self.channel1.get_p())
         
     def test_fade(self):
         """

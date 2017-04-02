@@ -16,16 +16,18 @@ from src.support.enumerations import ChannelModel
 
 class Channel(object):
     
-    def __init__(self,model,seed):
+    def __init__(self,model,seed,p):
         """
         Class constructor.
         
         Keyword arguments:
             model -- channel model (IDEAL, CONSTANT or MARKOV)
             seed -- seed for random number generator
+            p -- BER for constant channel and state 2 of Markov channel
         """
         self.__model = model
         self.__seed = seed
+        self.__p = p
         self.__rnd_state = np.random.RandomState(seed)
         
     def get_model(self):
@@ -40,6 +42,14 @@ class Channel(object):
     def get_seed(self):
         """Returns random number generator seed."""
         return self.__seed
+    
+    def set_p(self,p):
+        """Set new value of p."""
+        self.__p = p
+        
+    def get_p(self):
+        """Returns current value of p."""
+        return self.__p
     
     def fade(self,pck_Tx):
         """

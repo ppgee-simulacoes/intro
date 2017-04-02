@@ -47,26 +47,26 @@ class ResultsTest(unittest.TestCase):
         per_tpl = (1.0e-05, 1.0e-06)
         thrpt_tpl = (50, 0.5)
         
-        # Add 100 PER and Throughput results
+        # Add len.p PER and Throughput results
         len_p = len(self.res.get_param().p)
         for k in range(0,len_p):
             self.res.store_res(per_tpl,thrpt_tpl)
             
         # Check PER length
         per = self.res.get_per_list()
-        self.assertEqual(20,len(per))
+        self.assertEqual(len_p,len(per))
         
         # Check PER confidence length
         per_conf = self.res.get_per_conf()
-        self.assertEqual(20,len(per_conf))
+        self.assertEqual(len_p,len(per_conf))
         
         # Check thrpt length
         thrpt = self.res.get_thrpt_list()
-        self.assertEqual(20,len(thrpt))
+        self.assertEqual(len_p,len(thrpt))
         
         # Check thrpt_conf lenth
         thrpt_conf = self.res.get_thrpt_conf()
-        self.assertEqual(20,len(thrpt_conf))
+        self.assertEqual(len_p,len(thrpt_conf))
         
         # Plot
         theo_per = 1.0e-05*np.ones([len_p,])
