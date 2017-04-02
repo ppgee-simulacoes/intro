@@ -51,12 +51,12 @@ class Parameters(object):
     # Channel model
     chan_mod = ChannelModel.IDEAL
     
-    # Fixed BER = p
+    # Fixed log10(BER) = p
     '''
     This BER is used for the Constant channel and for state two of
     the Markov channel
     '''
-    p = np.linspace(1.0e-5,1.0e-3, num = 50)
+    p = np.linspace(1.0e-5,1.0e-3, num = 20)
     
     # Markov Channel Transition Matrix
     '''

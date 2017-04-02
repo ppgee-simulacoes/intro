@@ -35,6 +35,7 @@ class Channel(object):
     def set_seed(self,seed):
         """Set new seed."""
         self.__seed = seed
+        self.__rnd_state.seed(seed)
     
     def get_seed(self):
         """Returns random number generator seed."""

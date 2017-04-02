@@ -34,6 +34,7 @@ class Source(object):
     def set_seed(self,seed):
         """Set new seed."""
         self.__seed = seed
+        self.__rnd_state.seed(seed)
     
     def get_last_pck(self):
         """Returns a reference to the last transmitted packet."""
