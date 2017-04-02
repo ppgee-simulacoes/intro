@@ -30,13 +30,17 @@ class Parameters(object):
     # SIMULATION PARAMETERS
     
     # Seeds
-    seeds = np.linspace(1,100, num = 100)
+    seeds_flt = np.linspace(1,100, num = 100)
+    seeds = seeds_flt.astype(int)
     
     # Number of transmitted packets
     n_pcks = 1000
     
     # Warm-up: number of discarted packets at the beginning of iteration
     n_warm_up_pcks = 10
+    
+    # Confidence
+    conf = 0.95
     
     # TRANSMISSION PARAMETERS
     
