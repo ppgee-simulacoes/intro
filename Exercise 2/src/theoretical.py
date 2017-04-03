@@ -41,7 +41,6 @@ class Theoretical(object):
             per_mean -- theoretical mean value of PER
             thrpt_mean -- theoretical mean value of Throughput
         """
-        print("Theoretical Channel Model: ",self.get_model())
         if self.__model is ChannelModel.IDEAL:
             return self.validate_ideal()
         elif self.__model is ChannelModel.CONSTANT:
