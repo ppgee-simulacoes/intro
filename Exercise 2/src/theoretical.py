@@ -12,7 +12,7 @@ from src.support.enumerations import ChannelModel
 
 class Theoretical(object):
     
-    def __init__(self,model,tx_rate,p):
+    def __init__(self,param):
         """
         Constructor method. Initializes atrributes:
             self.__model -- parameters object
@@ -23,10 +23,11 @@ class Theoretical(object):
            model -- channel model
            p -- PER numpy array
         """
-        self.__p = p
-        self.__tx_rate = tx_rate
-        self.__model = model
-        if model == ChannelModel.MARKOV:
+        self.__n_bits = param.n_bits
+        self.__p = param.p
+        self.__tx_rate = param.tx_rate
+        self.__model = param.chan_mod
+        if self.__model == ChannelModel.MARKOV:
             self.__state_ps = self.markov_solve()
         else:
             self.__state_ps = np.array([])
@@ -62,6 +63,10 @@ class Theoretical(object):
         """Getter for tx_rate."""
         return self.__tx_rate
     
+    def get_n_bits(self):
+        """Getter for number of bits per packet."""
+        return self.__n_bits
+    
     def get_state_ps(self):
         """Getter for state probabilities."""
         return self.__state_ps
@@ -89,6 +94,10 @@ class Theoretical(object):
             per_mean -- theoretical mean value of PER
             thrpt_mean -- theoretical mean value of Throughput
         """
+#        ber_mean = self.get_p()
+#        per_mean = 1 - np.power((1 - ber_mean),self.__n_bits)
+#        thrpt_mean = self.get_tx_rate()*per_mean
+#        return ber_mean, per_mean, thrpt_mean
         raise NotImplementedError
     
     def validate_markov(self):

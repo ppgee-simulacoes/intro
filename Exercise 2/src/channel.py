@@ -16,7 +16,7 @@ from src.support.enumerations import ChannelModel
 
 class Channel(object):
     
-    def __init__(self,model,seed,p):
+    def __init__(self,model,seed,p_val):
         """
         Class constructor.
         
@@ -27,7 +27,7 @@ class Channel(object):
         """
         self.__model = model
         self.__seed = seed
-        self.__p = p
+        self.__p_val = p_val
         self.__rnd_state = np.random.RandomState(seed)
         
     def get_model(self):
@@ -43,13 +43,13 @@ class Channel(object):
         """Returns random number generator seed."""
         return self.__seed
     
-    def set_p(self,p):
+    def set_p_val(self,p_val):
         """Set new value of p."""
-        self.__p = p
+        self.__p_val = p_val
         
-    def get_p(self):
+    def get_p_val(self):
         """Returns current value of p."""
-        return self.__p
+        return self.__p_val
     
     def fade(self,pck_Tx):
         """
@@ -66,7 +66,7 @@ class Channel(object):
         if self.get_model() is ChannelModel.IDEAL:
             return self.__fade_ideal(pck_Tx)
         elif self.get_model() is ChannelModel.CONSTANT:
-            return self.__fade_constant(pck_Tx,self.get_p())
+            return self.__fade_constant(pck_Tx,self.get_p_val())
         elif self.get_model() is ChannelModel.MARKOV:
             return self.__fade_markov(pck_Tx)
         else:

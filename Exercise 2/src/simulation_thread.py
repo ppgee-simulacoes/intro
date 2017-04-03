@@ -29,7 +29,7 @@ class SimulationThread(object):
         self.chann = Channel(param.chan_mod,param.seeds[0],param.p[0])
         self.stat = Statistics(param.n_bits,param.tx_rate,param.conf)
         self.res = Results(param,figs_dir)
-        self.theo = Theoretical(param.chan_mod,param.tx_rate,param.p)
+        self.theo = Theoretical(param)
         
         self.__seed_count = 0
         self.__ber_count = 0
@@ -128,4 +128,4 @@ class SimulationThread(object):
         """
         self.__ber_count = self.__ber_count + 1
         if self.get_ber_count() < len(self.param.p):
-            self.chann.set_p(self.param.p[self.get_ber_count()])
+            self.chann.set_p_val(self.param.p[self.get_ber_count()])

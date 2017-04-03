@@ -139,7 +139,7 @@ class SimulationThreadTest(unittest.TestCase):
         
         # Test new BER
         self.assertEqual(1,self.sim.get_ber_count())
-        self.assertEqual(self.par.p[1],self.sim.chann.get_p())
+        self.assertEqual(self.par.p[1],self.sim.chann.get_p_val())
         
     def test_new_seed(self):
         self.sim.new_seed()
@@ -150,7 +150,7 @@ class SimulationThreadTest(unittest.TestCase):
     def test_new_ber(self):
         self.sim.new_ber()
         self.assertEqual(1,self.sim.get_ber_count())
-        self.assertTrue(self.sim.chann.get_p() == self.par.p[1])
+        self.assertTrue(self.sim.chann.get_p_val() == self.par.p[1])
         
     def test_simulate(self):
         self.sim.simulate()

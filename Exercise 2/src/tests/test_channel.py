@@ -17,11 +17,11 @@ class ChannelTest(unittest.TestCase):
     def setUp(self):
         seed = 10
         self.n_bits = 1000
-        p = 1e-5
-        self.channel1 = Channel(ChannelModel.IDEAL,seed,p)
-        self.channel2 = Channel(ChannelModel.CONSTANT,seed,p)
-        self.channel3 = Channel(ChannelModel.MARKOV,seed,p)
-        self.channel4 = Channel(3,seed,p)
+        p_val = 1e-5
+        self.channel1 = Channel(ChannelModel.IDEAL,seed,p_val)
+        self.channel2 = Channel(ChannelModel.CONSTANT,seed,p_val)
+        self.channel3 = Channel(ChannelModel.MARKOV,seed,p_val)
+        self.channel4 = Channel(3,seed,p_val)
         
     def test_get_model(self):
         self.assertEqual(ChannelModel.IDEAL,\
@@ -34,12 +34,12 @@ class ChannelTest(unittest.TestCase):
     def test_get_seed(self):
         self.assertEqual(10,self.channel1.get_seed())
         
-    def test_get_p(self):
-        self.assertEqual(1e-5,self.channel1.get_p())
+    def test_get_p_val(self):
+        self.assertEqual(1e-5,self.channel1.get_p_val())
         
-    def test_set_p(self):
-        self.channel1.set_p(2e-5)
-        self.assertEqual(2e-5,self.channel1.get_p())
+    def test_set_p_val(self):
+        self.channel1.set_p_val(2e-5)
+        self.assertEqual(2e-5,self.channel1.get_p_val())
         
     def test_fade(self):
         """
@@ -55,8 +55,8 @@ class ChannelTest(unittest.TestCase):
         self.assertTrue(np.all((pck_Rx == 0) | (pck_Rx == 1)))
         
         # Constant channel should introduce some error
-        self.channel2.set_p(0.5)
-        self.assertEqual(0.5,self.channel2.get_p())
+        self.channel2.set_p_val(0.5)
+        self.assertEqual(0.5,self.channel2.get_p_val())
         pck_Rx = self.channel2.fade(pck_Tx)
         self.assertTrue(np.all((pck_Rx == 0) | (pck_Rx == 1)))
         self.assertAlmostEqual(500.0,np.sum(pck_Rx),delta = 50)
