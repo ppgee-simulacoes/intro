@@ -94,11 +94,10 @@ class Theoretical(object):
             per_mean -- theoretical mean value of PER
             thrpt_mean -- theoretical mean value of Throughput
         """
-#        ber_mean = self.get_p()
-#        per_mean = 1 - np.power((1 - ber_mean),self.__n_bits)
-#        thrpt_mean = self.get_tx_rate()*per_mean
-#        return ber_mean, per_mean, thrpt_mean
-        raise NotImplementedError
+        ber_mean = self.get_p()
+        per_mean = 1 - np.power((1 - ber_mean),self.__n_bits)
+        thrpt_mean = self.get_tx_rate()*(1 - per_mean)
+        return ber_mean, per_mean, thrpt_mean
     
     def validate_markov(self):
         """
