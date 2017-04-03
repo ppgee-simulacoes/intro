@@ -27,6 +27,11 @@ class SimulationThreadTest(unittest.TestCase):
         
         self.par = par
         self.sim = SimulationThread(par,figs_dir)
+        
+        # Crate thread with constant channel
+        par.chan_mod = ChannelModel.CONSTANT
+        const_figs_dir = "test_figs/const_"
+        self.sim_const = SimulationThread(par,const_figs_dir)
     
     def test_get_seed_count(self):
         self.assertEqual(0,self.sim.get_seed_count())
@@ -154,6 +159,7 @@ class SimulationThreadTest(unittest.TestCase):
         
     def test_simulate(self):
         self.sim.simulate()
+        self.sim_const.simulate()
     
 if __name__ == '__main__':
     unittest.main()
