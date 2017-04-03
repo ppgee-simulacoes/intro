@@ -16,3 +16,8 @@ class ChannelModel(Enum):
     IDEAL = 0
     CONSTANT = 1
     MARKOV = 2
+    
+    def __eq__(self,other):
+        if self.__class__ is other.__class__:
+            return self.value == other.value
+        return NotImplemented

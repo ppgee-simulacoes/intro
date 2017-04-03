@@ -12,8 +12,8 @@ from channel import Channel
 from statistics import Statistics
 from results import Results
 from theoretical import Theoretical
-from support.enumerations import ChannelModel
-from parameters.parameters import Parameters
+from src.support.enumerations import ChannelModel
+from src.parameters.parameters import Parameters
 
 class SimulationThread(object):
     def __init__(self,param,figs_dir):

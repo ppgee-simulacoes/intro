@@ -8,7 +8,7 @@ Created on Sun Apr  2 11:16:43 2017
 """
 
 import numpy as np
-from support.enumerations import ChannelModel
+from src.support.enumerations import ChannelModel
 
 class Theoretical(object):
     
@@ -41,12 +41,12 @@ class Theoretical(object):
             per_mean -- theoretical mean value of PER
             thrpt_mean -- theoretical mean value of Throughput
         """
-        print("Channel Model: ",self.get_model())
-        if self.__model == ChannelModel.IDEAL:
+        print("Theoretical Channel Model: ",self.get_model())
+        if self.__model is ChannelModel.IDEAL:
             return self.validate_ideal()
-        elif self.__model == ChannelModel.CONSTANT:
+        elif self.__model is ChannelModel.CONSTANT:
             return self.validate_constant()
-        elif self.__model == ChannelModel.MARKOV:
+        elif self.__model is ChannelModel.MARKOV:
             return self.validate_markov()
         else:
             raise NameError('Unknown channel model!')

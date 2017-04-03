@@ -18,15 +18,14 @@ class Parameters(object):
         
     def __new__(cls, val):
         """
-        This is the Singleton Pattern to ensure that this class will have only
-        one instance
+        This is the Singleton Pattern to ensure that this class will have only one instance
         """        
         if Parameters.__instance is None:
             Parameters.__instance = object.__new__(cls)
         Parameters.__instance.val = val
         return Parameters.__instance    
     
-    ###########################################################################
+    #########################################################################
     # SIMULATION PARAMETERS
     
     # Seeds

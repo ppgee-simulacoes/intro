@@ -62,11 +62,12 @@ class Channel(object):
         Returns:
             pck_Rx -- received packet
         """
-        if self.get_model() == ChannelModel.IDEAL:
+#        print("Channel Model: ",self.get_model())
+        if self.get_model() is ChannelModel.IDEAL:
             return self.__fade_ideal(pck_Tx)
-        elif self.get_model() == ChannelModel.CONSTANT:
+        elif self.get_model() is ChannelModel.CONSTANT:
             return self.__fade_constant(pck_Tx)
-        elif self.get_model() == ChannelModel.MARKOV:
+        elif self.get_model() is ChannelModel.MARKOV:
             return self.__fade_markov(pck_Tx)
         else:
             raise NameError('Unknown channel model!')

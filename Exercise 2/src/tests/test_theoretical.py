@@ -11,15 +11,15 @@ import unittest
 import numpy as np
 
 from src.support.enumerations import ChannelModel
-from src.parameters.parameters import Parameters
 from src.theoretical import Theoretical
 
 class TheoreticalTest(unittest.TestCase):
     
     def setUp(self):
-        param = Parameters(1)
-        self.param = param
-        self.theo = Theoretical(param.chan_mod,param.tx_rate,param.p)
+        c_mod = ChannelModel.IDEAL
+        tx_rate = 50
+        p = np.linspace(1.0e-5,1.0e-3, num = 20)
+        self.theo = Theoretical(c_mod,tx_rate,p)
         
     def test_get_model(self):
         mod = self.theo.get_model()
@@ -27,7 +27,7 @@ class TheoreticalTest(unittest.TestCase):
         
     def test_get_tx_rate(self):
         rate = self.theo.get_tx_rate()
-        self.assertEqual(self.param.tx_rate,rate)
+        self.assertEqual(50,rate)
         
     def test_get_state_ps(self):
         ps = self.theo.get_state_ps()
