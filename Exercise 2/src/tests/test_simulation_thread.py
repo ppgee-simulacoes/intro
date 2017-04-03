@@ -23,7 +23,7 @@ class SimulationThreadTest(unittest.TestCase):
         new_seed = np.array([0, 1, 2, 3, 4])
         par.seeds = new_seed.astype(int)
         par.chan_mod = ChannelModel.IDEAL
-        par.n_pcks = 20
+        par.n_pcks = 1000
         
         self.par = par
         self.sim = SimulationThread(par,figs_dir)
@@ -50,7 +50,7 @@ class SimulationThreadTest(unittest.TestCase):
     def test_pck_loop(self):
         # Send all packets
         self.sim.pck_loop()
-        self.assertEqual(10,self.sim.stat.get_n_pcks())
+        self.assertEqual(990,self.sim.stat.get_n_pcks())
         self.assertEqual(0,self.sim.stat.get_n_pck_errors())
         
         # EMULATE END OF ITERATION

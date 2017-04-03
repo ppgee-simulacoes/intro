@@ -90,6 +90,8 @@ class Results(object):
         ax1.errorbar(self.get_param().p,np_per,yerr = np_per_conf,fmt = 'o')
         ax1.plot(self.get_param().p,theo_per,'r',linewidth = 0.5)
         
+        ax1.grid()
+        
         ax1.set_xlabel("Bit Error Rate")
         ax1.set_ylabel("Packet Error Rate")
         
@@ -109,6 +111,8 @@ class Results(object):
         ax1.errorbar(self.get_param().p,np_thrpt,yerr = np_thrpt_conf\
                      ,fmt = 'o')
         ax1.plot(self.get_param().p,theo_thrpt,'r',linewidth = 0.5)
+        
+        ax1.grid()
         
         ax1.set_xlabel("Bit Error Rate")
         ax1.set_ylabel("Throughput [Mbps]")
