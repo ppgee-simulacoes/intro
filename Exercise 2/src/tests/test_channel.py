@@ -46,17 +46,22 @@ class ChannelTest(unittest.TestCase):
         TODO Implement unit test for constant channel
         TODO Implement unit test for Markov channel
         """
-        pck_Tx = np.zeros([1,self.n_bits])
+        pck_Tx = np.zeros(self.n_bits)
+        self.assertEqual(self.n_bits,len(pck_Tx))
         
         # Ideal channel should cause no bit errors
         pck_Rx = self.channel1.fade(pck_Tx)
         self.assertEqual(0,np.sum(pck_Rx))
+        self.assertTrue(np.all((pck_Rx == 0) | (pck_Rx == 1)))
         
-        # For now, constant channel sould return exception
-        with self.assertRaises(NotImplementedError):
-            pck_Rx = self.channel2.fade(pck_Tx)
+        # Constant channel should introduce some error
+        self.channel2.set_p(0.5)
+        self.assertEqual(0.5,self.channel2.get_p())
+        pck_Rx = self.channel2.fade(pck_Tx)
+        self.assertTrue(np.all((pck_Rx == 0) | (pck_Rx == 1)))
+        self.assertAlmostEqual(500.0,np.sum(pck_Rx),delta = 50)
             
-        # For now, Markov channel sould return exception
+        # For now, Markov channel sould raise exception
         with self.assertRaises(NotImplementedError):
             pck_Rx = self.channel3.fade(pck_Tx)
         

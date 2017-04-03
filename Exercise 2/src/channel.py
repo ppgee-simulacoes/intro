@@ -66,7 +66,7 @@ class Channel(object):
         if self.get_model() is ChannelModel.IDEAL:
             return self.__fade_ideal(pck_Tx)
         elif self.get_model() is ChannelModel.CONSTANT:
-            return self.__fade_constant(pck_Tx)
+            return self.__fade_constant(pck_Tx,self.get_p())
         elif self.get_model() is ChannelModel.MARKOV:
             return self.__fade_markov(pck_Tx)
         else:
@@ -85,17 +85,20 @@ class Channel(object):
         pck_Rx = np.array(pck_Tx,copy = True)
         return pck_Rx
     
-    def __fade_constant(self,pck_Tx):
+    def __fade_constant(self,pck_Tx,exp_ber):
         """
         Constant channel, with a constant BER.
         
         Keyword arguments:
             pck_Tx -- transmitted packet
+            exp_ber -- expected bit error rate
             
         Returns:
             pck_Rx -- received packet
         """
-        raise NotImplementedError
+        err = 1.0*(self.__rnd_state.rand(len(pck_Tx)) < exp_ber)
+        pck_Rx = abs(pck_Tx - err)
+        return pck_Rx
     
     def __fade_markov(self,pck_Tx):
         """
