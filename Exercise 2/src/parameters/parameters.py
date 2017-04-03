@@ -29,7 +29,7 @@ class Parameters(object):
     # SIMULATION PARAMETERS
     
     # Seeds
-    seeds_flt = np.linspace(1,100, num = 100)
+    seeds_flt = np.linspace(1,10, num = 10)
     seeds = seeds_flt.astype(int)
     
     # Number of transmitted packets
@@ -52,7 +52,7 @@ class Parameters(object):
     # CHANNEL PARAMETERS
     
     # Channel model
-    chan_mod = ChannelModel.IDEAL
+    chan_mod = ChannelModel.CONSTANT
     
     # Fixed log10(BER) = p
     '''
