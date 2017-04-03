@@ -59,7 +59,7 @@ class Parameters(object):
     This BER is used for the Constant channel and for state two of
     the Markov channel
     '''
-    p = np.logspace(1.0e-5,1.0e-3, num = 20)
+    p = np.logspace(-6,-4, num = 20)
     
     # Markov Channel Transition Matrix
     '''

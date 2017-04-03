@@ -16,6 +16,7 @@ class ResultsTest(unittest.TestCase):
     
     def setUp(self):
         param = Parameters(1)
+        param.p = np.logspace(-6,-4, num = 20)
         figs_dir = "test_figs/"
         self.res = Results(param, figs_dir)
         

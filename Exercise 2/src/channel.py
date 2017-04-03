@@ -2,7 +2,6 @@
 """
 Channel class, which implements three different channel models.
 
-TODO Implement constant channel
 TODO Implement Markov channel
 
 Created on Mon Mar 27 09:16:52 2017
@@ -23,7 +22,7 @@ class Channel(object):
         Keyword arguments:
             model -- channel model (IDEAL, CONSTANT or MARKOV)
             seed -- seed for random number generator
-            p -- BER for constant channel and state 2 of Markov channel
+            p_val -- BER for constant channel and state 2 of Markov channel
         """
         self.__model = model
         self.__seed = seed
