@@ -86,7 +86,7 @@ class Results(object):
         np_per = np.array(self.get_per_list())
         np_per_conf = np.array(self.get_per_conf())
         
-        ax1.set_yscale('log')
+        ax1.set_xscale('log')
         ax1.errorbar(self.get_param().p,np_per,yerr = np_per_conf,fmt = 'o')
         ax1.plot(self.get_param().p,theo_per,'r',linewidth = 0.5)
         
@@ -105,7 +105,7 @@ class Results(object):
         np_thrpt = np.array(self.get_thrpt_list())
         np_thrpt_conf = np.array(self.get_thrpt_conf())
         
-        ax1.set_yscale('log')
+        ax1.set_xscale('log')
         ax1.errorbar(self.get_param().p,np_thrpt,yerr = np_thrpt_conf\
                      ,fmt = 'o')
         ax1.plot(self.get_param().p,theo_thrpt,'r',linewidth = 0.5)

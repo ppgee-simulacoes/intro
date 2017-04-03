@@ -50,25 +50,15 @@ class SimulationThread(object):
         # PER loop
         for p_idx in range(0,len(self.param.p)):
             # Seed loop
-            while(self.get_seed_count() < len(self.param.seeds)):
-                # Packet loop
-                for pck in range(0,self.param.n_pcks):
-                    # Send packet
-                    n_errors, pck_error = self.send_pck()
-            
-                    # Save results only if warm-up is over
-                    if pck > self.param.n_warm_up_pcks:
-                        self.stat.pck_received(pck_error)
-                
-                # After all packets have been sent, calculate iteration results
-                self.stat.calc_iteration_results()
-        
-                # Set new seed
-                self.new_seed()
+            self.seed_loop()
             
             # Calculate mean and confidence
             per_tpl, thrpt_tpl = self.stat.wrap_up()
             self.res.store_res(per_tpl,thrpt_tpl)
+            
+            # Reset seed counter and set new BER
+            self.reset_seed()
+            self.new_ber()
             
         # Validate and plot
         ber_theo, per_theo, thrpt_theo = self.theo.validate()
@@ -87,6 +77,33 @@ class SimulationThread(object):
         n_errors, pck_error = self.station.calculate_error(pck_rx)
         
         return n_errors, pck_error
+    
+    def pck_loop(self):
+        """
+        Loops throug all the necessary packet transmissions.
+        """
+        for pck in range(0,self.param.n_pcks):
+            # Send packet
+            n_errors, pck_error = self.send_pck()
+            
+            # Save results only if warm-up is over
+            if pck > self.param.n_warm_up_pcks - 1:
+                self.stat.pck_received(pck_error)
+                
+    def seed_loop(self):
+        """
+        Loops through all the seeds.
+        """
+        while(self.get_seed_count() < len(self.param.seeds)):
+            # Packet loop, send all packets
+            self.pck_loop()    
+
+            # After all packets have been sent calculate iteration results
+            self.stat.calc_iteration_results()
+                
+            # Set new seed
+            self.new_seed()
+        
     
     def new_seed(self):
         """
@@ -110,4 +127,5 @@ class SimulationThread(object):
         Resets the channel's BER.
         """
         self.__ber_count = self.__ber_count + 1
-        self.chann.set_p(self.param.p[self.get_ber_count()])
+        if self.get_ber_count() < len(self.param.p):
+            self.chann.set_p(self.param.p[self.get_ber_count()])
