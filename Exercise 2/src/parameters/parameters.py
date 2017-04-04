@@ -43,6 +43,8 @@ class Parameters(object):
     seeds = seeds_flt.astype(int)
     
     # Confidence range: used if self.simulation_type = SimType.FIXED_CONF
+    # Confidence interval  = (mean - h, mean + h)
+    # h = conf_range * mean
     conf_range = 0.01
     
     # Confidence
