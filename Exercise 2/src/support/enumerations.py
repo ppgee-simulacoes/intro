@@ -21,3 +21,15 @@ class ChannelModel(Enum):
         if self.__class__ is other.__class__:
             return self.value == other.value
         return NotImplemented
+    
+class SimType(Enum):
+    """
+    Types of simulation.
+    """
+    FIXED_SEEDS = 0
+    FIXED_CONF = 1
+    
+    def __eq__(self,other):
+        if self.__class__ is other.__class__:
+            return self.value == other.value
+        return NotImplemented

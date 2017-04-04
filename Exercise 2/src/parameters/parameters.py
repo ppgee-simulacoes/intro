@@ -10,6 +10,7 @@ Created on Thu Mar 30 16:32:35 2017
 
 import numpy as np
 from src.support.enumerations import ChannelModel
+from src.support.enumerations import SimType
 
 class Parameters(object):
     
@@ -27,6 +28,15 @@ class Parameters(object):
     
     #########################################################################
     # SIMULATION PARAMETERS
+    
+    '''
+    Simulation type:
+        FIXED_SEEDS -- Simulate for given seeds and calculate confidence 
+                       interval
+        FIXED_CONF  -- Simulate multiple seeds util a confidence interval is
+                       reached
+    '''
+    simulation_type = SimType.FIXED_SEEDS
     
     # Seeds: used if self.simulation_type == SimType.FIXED_SEEDS
     seeds_flt = np.linspace(1,10, num = 10)
