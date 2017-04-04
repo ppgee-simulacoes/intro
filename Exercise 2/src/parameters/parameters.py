@@ -28,18 +28,21 @@ class Parameters(object):
     #########################################################################
     # SIMULATION PARAMETERS
     
-    # Seeds
+    # Seeds: used if self.simulation_type == SimType.FIXED_SEEDS
     seeds_flt = np.linspace(1,10, num = 10)
     seeds = seeds_flt.astype(int)
+    
+    # Confidence range: used if self.simulation_type = SimType.FIXED_CONF
+    conf_range = 0.05
+    
+    # Confidence
+    conf = 0.95
     
     # Number of transmitted packets
     n_pcks = 1000
     
     # Warm-up: number of discarted packets at the beginning of iteration
     n_warm_up_pcks = 10
-    
-    # Confidence
-    conf = 0.95
     
     # TRANSMISSION PARAMETERS
     

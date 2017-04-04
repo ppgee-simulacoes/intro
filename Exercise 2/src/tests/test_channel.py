@@ -43,7 +43,6 @@ class ChannelTest(unittest.TestCase):
         
     def test_fade(self):
         """
-        TODO Implement unit test for constant channel
         TODO Implement unit test for Markov channel
         """
         pck_Tx = np.zeros(self.n_bits)
