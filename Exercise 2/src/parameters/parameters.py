@@ -36,14 +36,14 @@ class Parameters(object):
         FIXED_CONF  -- Simulate multiple seeds util a confidence interval is
                        reached
     '''
-    simulation_type = SimType.FIXED_SEEDS
+    simulation_type = SimType.FIXED_CONF
     
     # Seeds: used if self.simulation_type == SimType.FIXED_SEEDS
     seeds_flt = np.linspace(1,10, num = 10)
     seeds = seeds_flt.astype(int)
     
     # Confidence range: used if self.simulation_type = SimType.FIXED_CONF
-    conf_range = 0.05
+    conf_range = 0.01
     
     # Confidence
     conf = 0.95

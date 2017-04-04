@@ -7,12 +7,15 @@ Created on Sun Apr  2 11:04:28 2017
 @author: Calil
 """
 
+import math
+
 from source import Source
 from channel import Channel
 from statistics import Statistics
 from results import Results
 from theoretical import Theoretical
 from src.support.enumerations import ChannelModel
+from src.support.enumerations import SimType
 from src.parameters.parameters import Parameters
 
 class SimulationThread(object):
@@ -94,33 +97,91 @@ class SimulationThread(object):
         """
         Loops through all the seeds.
         """
-        while(self.get_seed_count() < len(self.param.seeds)):
-            # Packet loop, send all packets
-            self.pck_loop()    
+        if self.param.simulation_type is SimType.FIXED_SEEDS:
+            while(self.get_seed_count() < len(self.param.seeds)):
+                # Packet loop, send all packets
+                self.pck_loop()    
 
-            # After all packets have been sent calculate iteration results
-            self.stat.calc_iteration_results()
+                # After all packets have been sent calculate iteration results
+                self.stat.calc_iteration_results()
                 
-            # Set new seed
-            self.new_seed()
+                # Set new seed
+                self.new_seed()
+                
+        elif self.param.simulation_type is SimType.FIXED_CONF:
+            # Minimum confidence range between PER and Throughput
+            conf_min = 1
+            while(conf_min > self.param.conf_range):
+                # Packet loop, send all packets
+                self.pck_loop()    
+
+                # After all packets have been sent calculate iteration results
+                self.stat.calc_iteration_results()
+
+                # After all packets have been sent calculate iteration results
+                # Condition necessary for confidence interval can not be
+                # compyted with only one sample
+                if self.get_seed_count() > 0:
+                    per, per_conf = \
+                        self.stat.conf_interval(self.stat.get_per_list())
+                    thrpt, thrpt_conf = \
+                        self.stat.conf_interval(self.stat.get_thrpt_list())
+                    
+                    # Redefine minimum confidence
+                    conf_min = min([per_conf/per , thrpt_conf/thrpt])
+                
+                # Set new seed
+                self.new_seed()
+        else:
+            raise NameError('Unknown simulation type!')
         
     
     def new_seed(self):
         """
         Sets the seed of all objects, incrementing the seed counter.
         """
+        # Increment seed counter
         self.__seed_count = self.__seed_count + 1
-        if self.get_seed_count() < len(self.param.seeds):
-            self.station.set_seed(self.param.seeds[self.get_seed_count()])
-            self.chann.set_seed(self.param.seeds[self.get_seed_count()])
+        
+        # If simulation type is fixed seeds
+        if self.param.simulation_type is SimType.FIXED_SEEDS:
+            
+            # If the previous was not the last seed
+            if self.get_seed_count() < len(self.param.seeds):
+                # New seed is taken from param.seeds
+                self.station.set_seed(self.param.seeds[self.get_seed_count()])
+                self.chann.set_seed(self.param.seeds[self.get_seed_count()])
+                
+        # If simulation type is fixed confidence range
+        elif self.param.simulation_type is SimType.FIXED_CONF:
+            # New seed is the seed counter
+            self.station.set_seed(self.get_seed_count())
+            self.chann.set_seed(self.get_seed_count())
+            
+        else:
+            raise NameError('Unknown simulation type!')
         
     def reset_seed(self):
         """
         Resets the seed of all objects.
         """
+        # Set seed counter to zero
         self.__seed_count = 0
-        self.station.set_seed(self.param.seeds[self.get_seed_count()])
-        self.chann.set_seed(self.param.seeds[self.get_seed_count()])
+        
+        # If simulation type is fixed seeds
+        if self.param.simulation_type is SimType.FIXED_SEEDS:
+            # New seed is taken from param.seeds
+            self.station.set_seed(self.param.seeds[self.get_seed_count()])
+            self.chann.set_seed(self.param.seeds[self.get_seed_count()])
+            
+        # If simulation type is fixed confidence range
+        elif self.param.simulation_type is SimType.FIXED_CONF:
+            # New seed is the seed counter
+            self.station.set_seed(self.get_seed_count())
+            self.chann.set_seed(self.get_seed_count())
+            
+        else:
+            raise NameError('Unknown simulation type!')
     
     def new_ber(self):
         """
