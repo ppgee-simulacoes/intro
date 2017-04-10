@@ -7,16 +7,12 @@ Created on Sun Apr  2 11:04:28 2017
 @author: Calil
 """
 
-import math
-
 from source import Source
 from channel import Channel
 from statistics import Statistics
 from results import Results
 from theoretical import Theoretical
-from src.support.enumerations import ChannelModel
 from src.support.enumerations import SimType
-from src.parameters.parameters import Parameters
 
 class SimulationThread(object):
     def __init__(self,param,figs_dir):
